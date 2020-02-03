@@ -370,6 +370,8 @@ class EPub extends EventEmitter {
             case "identifier":
                 if (metadata[keys[i]]["@"] && metadata[keys[i]]["@"]["opf:scheme"] == "ISBN") {
                     this.metadata.ISBN = String(metadata[keys[i]]["#"] || "").trim();
+                } else if (metadata[keys[i]]["@"] && metadata[keys[i]]["@"].id == "unique-id") {
+                        this.metadata.uniqueId = String(metadata[keys[i]]["#"] || "").trim();
                 } else if (metadata[keys[i]]["@"] && metadata[keys[i]]["@"].id && metadata[keys[i]]["@"].id.match(/uuid/i)) {
                     this.metadata.UUID = String(metadata[keys[i]]["#"] || "").replace('urn:uuid:', '').toUpperCase().trim();
                 } else if (Array.isArray(metadata[keys[i]])) {
@@ -377,6 +379,8 @@ class EPub extends EventEmitter {
                         if (metadata[keys[i]][j]["@"]) {
                             if (metadata[keys[i]][j]["@"]["opf:scheme"] == "ISBN") {
                                 this.metadata.ISBN = String(metadata[keys[i]][j]["#"] || "").trim();
+                            } else if (metadata[keys[i]]["@"].id == "unique-id") {
+                                this.metadata.uniqueId = String(metadata[keys[i]][j]["#"] || "").trim();
                             } else if (metadata[keys[i]][j]["@"].id && metadata[keys[i]][j]["@"].id.match(/uuid/i)) {
                                 this.metadata.UUID = String(metadata[keys[i]][j]["#"] || "").replace('urn:uuid:', '').toUpperCase().trim();
                             }
